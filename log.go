@@ -2,7 +2,7 @@
 //
 // This package is designed to support basic logging by either writing to standard output
 // or any `io.Writer` provided by the user.
-package logger
+package log
 
 import (
 	"fmt"
@@ -26,13 +26,24 @@ type Logger struct {
 //
 // This will print: `Hello world` to the default writer (os.Stdout).
 func (reciever Logger) Log(a ...any) {
+	if reciever.writer == nil {
+		return
+	}
 	fmt.Fprintln(reciever.writer, a...)
 }
 
+// Log writes a log message to the default logger.
+func Log(a ...any) {
+	DefaultLogger.Log(a...)
+}
 // DefaultLogger is the default logger instance that writes to os.Stdout.
 //
 // Users can either use this directly or create their own Logger with a custom writer.
 var DefaultLogger Logger
+
+func CreateLogger(writer io.Writer) Logger {
+	return Logger{writer: writer}
+}
 
 // init initializes the DefaultLogger to write to standard output (os.Stdout).
 func init() {
