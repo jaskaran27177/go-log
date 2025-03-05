@@ -40,7 +40,7 @@ func Log(a ...any) {
 //
 // Users can either use this directly or create their own Logger with a custom writer.
 var DefaultLogger Logger
-
+ 
 func CreateLogger(writer io.Writer) Logger {
 	return Logger{writer: writer}
 }
