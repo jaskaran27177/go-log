@@ -40,9 +40,10 @@ func Log(a ...any) {
 //
 // Users can either use this directly or create their own Logger with a custom writer.
 var DefaultLogger Logger
- 
+// CreateLogger creates a new Logger instance with the specified writer.
 func CreateLogger(writer io.Writer) Logger {
-	return Logger{writer: writer}
+	DefaultLogger.writer = writer
+	return DefaultLogger
 }
 
 // init initializes the DefaultLogger to write to standard output (os.Stdout).
